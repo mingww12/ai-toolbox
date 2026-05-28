@@ -3,172 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🔮 深空工具站 — AI工具导航</title>
-<meta name="description" content="44个精选AI工具和在线工具导航">
+<title>🤖 AI百宝箱 — AI PPT生成器 + 工具导航</title>
+<meta name="description" content="AI PPT自动生成器 + 45个精选AI工具导航">
+<script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{font-size:15px;-webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
 @media(max-width:400px){html{font-size:14px}}
 
 @keyframes twinkle{0%,100%{opacity:.3}50%{opacity:.8}}
-@keyframes glow{0%,100%{box-shadow:0 0 15px rgba(129,140,248,.08)}50%{box-shadow:0 0 30px rgba(129,140,248,.2)}}
-@keyframes drift{0%{transform:translateY(0)}50%{transform:translateY(-8px)}100%{transform:translateY(0)}}
-@keyframes fadeSlide{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes rotate{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+@keyframes drift{0%{transform:translateY(0)}50%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+@keyframes fadeSlide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 @keyframes breathe{0%,100%{opacity:.4}50%{opacity:.8}}
+@keyframes pulse{0%,100%{box-shadow:0 0 8px rgba(129,140,248,.1)}50%{box-shadow:0 0 20px rgba(129,140,248,.2)}}
 
 body{
   background:#080a14;color:#d1d5db;
   font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif;
   min-height:100vh;overflow-x:hidden;
   background-image:
-    radial-gradient(ellipse 80% 50% at 30% 20%, rgba(99,102,241,.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 70% 80%, rgba(6,182,212,.04) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 50% at 10% 60%, rgba(168,85,247,.04) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 50% at 30% 20%,rgba(99,102,241,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 70% 80%,rgba(6,182,212,.04) 0%,transparent 50%);
 }
 body::before{
-  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:-1;
   background-image:
-    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,.3), transparent),
-    radial-gradient(1px 1px at 50% 15%, rgba(255,255,255,.2), transparent),
-    radial-gradient(1.5px 1.5px at 80% 40%, rgba(255,255,255,.25), transparent),
-    radial-gradient(1px 1px at 30% 70%, rgba(255,255,255,.15), transparent),
-    radial-gradient(1.5px 1.5px at 70% 60%, rgba(255,255,255,.2), transparent),
-    radial-gradient(1px 1px at 90% 90%, rgba(255,255,255,.15), transparent),
-    radial-gradient(1px 1px at 10% 85%, rgba(255,255,255,.2), transparent),
-    radial-gradient(1px 1px at 60% 35%, rgba(255,255,255,.1), transparent);
-  pointer-events:none;z-index:-1;animation:twinkle 4s ease-in-out infinite;
+    radial-gradient(1px 1px at 20% 30%,rgba(255,255,255,.3),transparent),
+    radial-gradient(1px 1px at 50% 15%,rgba(255,255,255,.2),transparent),
+    radial-gradient(1.5px 1.5px at 80% 40%,rgba(255,255,255,.25),transparent),
+    radial-gradient(1px 1px at 30% 70%,rgba(255,255,255,.15),transparent),
+    radial-gradient(1.5px 1.5px at 70% 60%,rgba(255,255,255,.2),transparent),
+    radial-gradient(1px 1px at 10% 85%,rgba(255,255,255,.2),transparent);
+  animation:twinkle 4s ease-in-out infinite;
 }
+::selection{background:#818cf855;color:#fff}
+a{color:#818cf8;text-decoration:none}
 
-/* Hero */
-.hero{
-  position:relative;text-align:center;padding:50px 16px 28px;overflow:hidden;
-}
+/* ══════ HERO ══════ */
+.hero{position:relative;text-align:center;padding:28px 16px 10px;overflow:hidden}
 .hero::before{
-  content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);
+  content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
   width:500px;height:500px;
   background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 60%);
   pointer-events:none;
 }
-.h-glow{
-  position:absolute;top:10px;right:10px;width:120px;height:120px;
-  background:radial-gradient(circle,rgba(6,182,212,.06),transparent 70%);
-  pointer-events:none;
-}
-.h-icon{font-size:2.6rem;display:block;margin-bottom:4px;animation:drift 4s ease-in-out infinite;position:relative;z-index:1}
-.h-title{
-  font-size:1.6rem;font-weight:800;letter-spacing:-.02em;
-  background:linear-gradient(135deg,#c7d2fe,#818cf8,#67e8f9);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  position:relative;z-index:1;
-}
-.h-desc{font-size:.72rem;color:#4b5563;margin-top:4px;position:relative;z-index:1}
+.h-icon{font-size:2.2rem;display:block;animation:drift 4s ease-in-out infinite}
+.h-title{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#c7d2fe,#818cf8,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.h-desc{font-size:.58rem;color:#4b5563;margin-top:2px}
 
-/* Stats glass */
+/* ══════ PPT TOOL (30% AREA) ══════ */
+.ppt-wrap{max-width:580px;margin:6px auto 10px;padding:0 10px}
+.ppt-card{
+  background:rgba(17,24,39,.4);border:1px solid rgba(255,255,255,.06);border-radius:18px;
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:14px;
+  animation:pulse 3s ease-in-out infinite;
+  position:relative;overflow:hidden;
+}
+.ppt-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(129,140,248,.2),transparent);
+}
+.pt{display:flex;align-items:center;gap:6px;margin-bottom:10px}
+.pt .pi{font-size:1rem}
+.pt .pn{font-size:.68rem;font-weight:700;color:#a5b4fc}
+.pt .ps{font-size:.5rem;color:#4b5563;margin-left:auto}
+.pr{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pr .hl{grid-column:1/-1}
+.pr label{font-size:.52rem;color:#4b5563;font-weight:500;margin-bottom:2px;display:block}
+.pr input,.pr select{
+  width:100%;padding:7px 10px;border-radius:8px;
+  background:rgba(13,17,23,.6);border:1px solid rgba(255,255,255,.06);
+  color:#d1d5db;font-size:.6rem;outline:none;transition:.2s;
+}
+.pr input:focus,.pr select:focus{border-color:rgba(129,140,248,.2)}
+.pr input::placeholder{color:#374151}
+.pr select option{background:#111827;color:#d1d5db}
+.ppt-go{
+  grid-column:1/-1;padding:10px;border-radius:10px;border:none;margin-top:6px;
+  background:linear-gradient(135deg,rgba(129,140,248,.2),rgba(99,102,241,.1));
+  border:1px solid rgba(129,140,248,.25);color:#a5b4fc;font-size:.65rem;font-weight:600;
+  cursor:pointer;transition:.25s;
+}
+.ppt-go:active{transform:scale(.97)}
+.ppt-go:hover{background:linear-gradient(135deg,rgba(129,140,248,.3),rgba(99,102,241,.15))}
+.ppt-go:disabled{opacity:.4;cursor:not-allowed}
+.ppt-go .sp{display:none}
+.ppt-go.loading .sp{display:inline-block;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.ppt-msg{font-size:.5rem;margin-top:6px;display:none}
+.ppt-msg.err{color:#f87171}
+.ppt-msg.ok{color:#34d399}
+.ppt-out{display:none;flex-direction:column;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.04)}
+.ppt-out.show{display:flex}
+.ppt-preview{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:4px 0}
+.ppt-preview::-webkit-scrollbar{display:none}
+.ppt-slide{
+  flex:0 0 80px;height:50px;border-radius:6px;
+  background:rgba(13,17,23,.6);border:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.42rem;color:#4b5563;padding:4px;text-align:center;overflow:hidden;
+}
+.ppt-dl{
+  display:flex;gap:6px;
+}
+.ppt-dl button{
+  flex:1;padding:8px;border-radius:8px;border:none;font-size:.58rem;font-weight:600;
+  cursor:pointer;transition:.2s;
+}
+.ppt-dl .dl-btn{background:rgba(129,140,248,.15);color:#a5b4fc}
+.ppt-dl .dl-btn:hover{background:rgba(129,140,248,.25)}
+.ppt-dl .cp-btn{background:rgba(34,197,94,.1);color:#4ade80}
+.ppt-dl .cp-btn:hover{background:rgba(34,197,94,.2)}
+.ppt-key-row{display:flex;gap:6px;grid-column:1/-1}
+.ppt-key-row input{flex:1}
+.ppt-key-row button{
+  padding:7px 12px;border-radius:8px;border:none;
+  background:rgba(129,140,248,.1);color:#a5b4fc;font-size:.52rem;cursor:pointer;
+  white-space:nowrap;transition:.2s;
+}
+.ppt-key-row button:hover{background:rgba(129,140,248,.2)}
+.ppt-key-guide{text-align:center;margin-top:4px}
+.ppt-key-guide a{font-size:.48rem;color:#374151}
+.ppt-key-guide a:hover{color:#6b7280}
+.pr .skip-t{grid-column:1/-1;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pr .skip-t label{display:inline}
+.pr .skip-t input[type=checkbox]{width:auto;accent-color:#818cf8;margin:0}
+.pr .skip-t input[type=number]{width:60px;display:none}
+.pr .skip-t input[type=number].show{display:inline-block}
+.ppt-notes{font-size:.48rem;color:#374151;margin-top:2px;grid-column:1/-1}
+
+/* ══════ STATS ══════ */
 .stats{
-  display:inline-flex;gap:16px;margin:14px auto;padding:8px 20px;
-  border-radius:100px;position:relative;z-index:1;
-  background:rgba(17,24,39,.5);border:1px solid rgba(255,255,255,.06);
+  display:inline-flex;gap:14px;margin:10px auto;padding:6px 18px;
+  border-radius:100px;background:rgba(17,24,39,.5);border:1px solid rgba(255,255,255,.06);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
 }
 .stat{text-align:center}
-.stat .n{font-size:.9rem;font-weight:700;color:#818cf8;display:block}
-.stat .l{font-size:.48rem;color:#4b5563}
+.stat .n{font-size:.8rem;font-weight:700;color:#818cf8;display:block}
+.stat .l{font-size:.45rem;color:#4b5563}
 
-/* Search */
-.srch{max-width:400px;margin:16px auto 0;position:relative;z-index:1}
+/* ══════ SEARCH ══════ */
+.srch{max-width:400px;margin:12px auto 0}
 .srch input{
-  width:100%;padding:11px 16px;border-radius:14px;
+  width:100%;padding:10px 16px;border-radius:12px;
   background:rgba(17,24,39,.6);border:1px solid rgba(255,255,255,.08);
-  color:#d1d5db;font-size:.75rem;outline:none;
+  color:#d1d5db;font-size:.7rem;outline:none;
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  transition:all .25s;
+  transition:.25s;
 }
-.srch input:focus{border-color:rgba(129,140,248,.35);box-shadow:0 0 0 4px rgba(129,140,248,.06);background:rgba(17,24,39,.7)}
-.srch input::placeholder{color:#374151}
+.srch input:focus{border-color:rgba(129,140,248,.35);box-shadow:0 0 0 4px rgba(129,140,248,.06)}
 
-/* Pills glass */
+/* ══════ PILLS ══════ */
 .pills-w{
   position:sticky;top:0;z-index:50;
-  padding:8px 10px 10px;
+  padding:6px 10px 8px;
   background:rgba(8,10,20,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid rgba(255,255,255,.04);
 }
-.pills{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;}
+.pills{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .pills::-webkit-scrollbar{display:none}
 .pill{
-  flex:0 0 auto;padding:6px 14px;border-radius:100px;
-  font-size:.62rem;font-weight:500;cursor:pointer;user-select:none;white-space:nowrap;
+  flex:0 0 auto;padding:5px 12px;border-radius:100px;
+  font-size:.58rem;font-weight:500;cursor:pointer;user-select:none;white-space:nowrap;
   background:rgba(17,24,39,.4);border:1px solid rgba(255,255,255,.05);
-  color:#4b5563;transition:all .25s;animation:fadeSlide .4s ease backwards;
+  color:#4b5563;transition:.25s;
 }
 .pill:active{transform:scale(.93)}
-.pill:hover{border-color:rgba(129,140,248,.15);color:#6b7280}
-.pill.active{
-  background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.3);color:#a5b4fc;
-  box-shadow:0 0 16px rgba(129,140,248,.06);
-}
-.pill .c{font-size:.46rem;color:#374151}
-.pill.active .c{color:rgba(129,140,248,.5)}
+.pill.active{background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.3);color:#a5b4fc}
+.pill .c{font-size:.44rem;color:#374151}
 
-/* Grid */
-.gw{max-width:720px;margin:0 auto;padding:10px 10px 40px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px}
-@media(max-width:420px){.grid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}}
-.ch{
-  display:flex;align-items:center;gap:8px;padding:8px 4px;grid-column:1/-1;animation:fadeSlide .4s ease;
-}
-.ch .ci{font-size:.8rem}
-.ch .cn{font-size:.68rem;font-weight:600;color:#6b7280}
+/* ══════ GRID ══════ */
+.gw{max-width:720px;margin:0 auto;padding:8px 10px 40px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:7px}
+@media(max-width:420px){.grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}}
+.ch{display:flex;align-items:center;gap:6px;padding:6px 4px;grid-column:1/-1;animation:fadeSlide .4s ease}
+.ch .ci{font-size:.7rem}
+.ch .cn{font-size:.62rem;font-weight:600;color:#6b7280}
 .ch .cb{flex:1;height:1px;background:linear-gradient(90deg,rgba(255,255,255,.06),transparent)}
-
-/* Card glass */
 .card{
-  position:relative;display:flex;flex-direction:column;padding:16px 12px 14px;
-  background:rgba(17,24,39,.4);border-radius:16px;
+  display:flex;flex-direction:column;padding:14px 10px 12px;
+  background:rgba(17,24,39,.4);border-radius:14px;
   border:1px solid rgba(255,255,255,.06);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   text-decoration:none;color:#d1d5db;
-  transition:all .35s cubic-bezier(.22,1,.36,1);
-  animation:fadeSlide .5s ease backwards;
-  overflow:hidden;
+  transition:.35s cubic-bezier(.22,1,.36,1);
+  animation:fadeSlide .5s ease backwards;overflow:hidden;
 }
-.card::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(129,140,248,.12),transparent);
-  opacity:0;transition:opacity .35s;
-}
-.card:hover{transform:translateY(-4px);background:rgba(17,24,39,.55);border-color:rgba(129,140,248,.15);box-shadow:0 12px 32px rgba(0,0,0,.3)}
-.card:hover::before{opacity:1}
+.card:hover{transform:translateY(-3px);background:rgba(17,24,39,.55);border-color:rgba(129,140,248,.15);box-shadow:0 10px 28px rgba(0,0,0,.3)}
 .card:active{transform:scale(.96)}
-.ct{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.ct{display:flex;align-items:center;gap:6px;margin-bottom:6px}
 .ci{
-  width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;
-  font-size:1rem;background:rgba(30,41,59,.5);border:1px solid rgba(255,255,255,.04);flex-shrink:0;
-  transition:.3s;
+  width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:.9rem;background:rgba(30,41,59,.5);border:1px solid rgba(255,255,255,.04);flex-shrink:0;
 }
-.card:hover .ci{background:rgba(30,41,59,.7);border-color:rgba(129,140,248,.15)}
-.cn{font-size:.65rem;font-weight:600;color:#e5e7eb;line-height:1.3}
-.cd{font-size:.52rem;color:#4b5563;line-height:1.4;overflow:hidden}
-.chot{
-  display:inline-block;margin-top:3px;
+.cnn{font-size:.6rem;font-weight:600;color:#e5e7eb;line-height:1.3}
+.cdd{font-size:.5rem;color:#4b5563;line-height:1.4}
+.chott{
+  display:inline-block;margin-top:2px;
   background:linear-gradient(135deg,rgba(239,68,68,.2),rgba(249,115,22,.2));
-  color:#fb923c;font-size:.4rem;font-weight:700;padding:1px 7px;border-radius:4px;
+  color:#fb923c;font-size:.38rem;font-weight:700;padding:1px 6px;border-radius:4px;
   border:1px solid rgba(239,68,68,.15);
 }
-.ca{display:none}
 
-/* Footer */
-.ft{padding:16px;text-align:center;border-top:1px solid rgba(255,255,255,.04);margin:0 12px}
-.ft .u{font-size:.48rem;color:#374151;margin-bottom:4px}
-.ft .l{font-size:.48rem;color:#374151}
-.ft .l a{color:#4b5563;cursor:pointer;transition:.2s}
-.ft .l a:hover{color:#818cf8}
-
-.empty{text-align:center;padding:40px;color:#374151;font-size:.7rem}
+/* ══════ FOOTER ══════ */
+.ft{padding:14px;text-align:center;border-top:1px solid rgba(255,255,255,.04);margin:0 12px}
+.ft .u{font-size:.46rem;color:#374151;margin-bottom:3px}
+.ft .l{font-size:.46rem;color:#374151}
+.ft .l span{color:#4b5563;cursor:pointer;transition:.2s}
+.ft .l span:hover{color:#818cf8}
+.empty{text-align:center;padding:40px;color:#374151;font-size:.6rem}
 .toast{
   position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);
-  padding:10px 22px;border-radius:12px;font-size:.62rem;z-index:999;
+  padding:8px 20px;border-radius:10px;font-size:.55rem;z-index:999;
   background:rgba(17,24,39,.9);border:1px solid rgba(255,255,255,.08);
   color:#d1d5db;backdrop-filter:blur(16px);
   opacity:0;pointer-events:none;transition:.3s;
@@ -176,22 +222,70 @@ body::before{
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .fab{
-  position:fixed;bottom:24px;right:20px;width:38px;height:38px;border-radius:50%;
+  position:fixed;bottom:22px;right:18px;width:34px;height:34px;border-radius:50%;
   background:rgba(17,24,39,.6);border:1px solid rgba(255,255,255,.06);
-  color:#4b5563;font-size:.9rem;backdrop-filter:blur(12px);
+  color:#4b5563;font-size:.8rem;backdrop-filter:blur(12px);
   display:none;align-items:center;justify-content:center;cursor:pointer;z-index:90;
   transition:.2s;box-shadow:0 4px 16px rgba(0,0,0,.3);
 }
-.fab:hover{border-color:rgba(129,140,248,.25);color:#818cf8;transform:translateY(-2px)}
+.fab:hover{border-color:rgba(129,140,248,.25);color:#818cf8}
 </style>
 </head>
 <body>
 
 <div class="hero">
-  <div class="h-glow"></div>
-  <span class="h-icon">🔮</span>
-  <h1 class="h-title">深空工具站</h1>
-  <p class="h-desc">44个精选工具，在深空中发现最佳工具</p>
+  <span class="h-icon">🤖</span>
+  <h1 class="h-title">AI百宝箱</h1>
+  <p class="h-desc">PPT自动生成 + 45个精选工具导航</p>
+</div>
+
+<!-- ═══ PPT TOOL ═══ (30% area) -->
+<div class="ppt-wrap">
+  <div class="ppt-card" id="pptCard">
+    <div class="pt">
+      <span class="pi">📊</span>
+      <span class="pn">AI PPT 自动生成器</span>
+      <span class="ps">输入主题 · 一键出稿</span>
+    </div>
+    <div class="pr">
+      <div class="hl"><label>📝 PPT主题/内容要点</label>
+        <input id="pptTopic" placeholder="如：我的毕业设计——基于深度学习的图像识别…"></div>
+      <div><label>🎯 类型</label>
+        <select id="pptType">
+          <option value="defense">🎓 毕业答辩</option>
+          <option value="business">💼 商业计划书</option>
+          <option value="report" selected>📋 工作汇报</option>
+          <option value="course">📚 教学课件</option>
+          <option value="product">🚀 产品发布会</option>
+        </select></div>
+      <div><label>📄 页数</label>
+        <select id="pptSlides">
+          <option>6</option><option selected>8</option><option>10</option><option>12</option><option>15</option>
+        </select></div>
+      <div class="skip-t"><label>🎞️ 跳过已有PPT</label>
+        <input type="checkbox" id="pptSkip" onchange="document.getElementById('pptSkipNum').classList.toggle('show',this.checked)">
+        <input type="number" id="pptSkipNum" min="1" max="20" value="3" placeholder="几页"></div>
+      <div class="ppt-key-row">
+        <input id="pptKey" placeholder="sk-... 你的DeepSeek API Key (免费获赠500万tokens)" type="password">
+        <button onclick="savePPTKey()">💾 记住</button>
+      </div>
+      <button class="ppt-go" id="pptGo" onclick="genPPT()"><span class="sp">⟳</span> 🪄 一键生成PPT</button>
+      <div class="ppt-msg" id="pptMsg"></div>
+      <div class="ppt-notes">💡 AI自动生成每一页的标题+要点+配图建议，支持下载 .pptx 文件，PPT/WPS可直接编辑</div>
+    </div>
+    <div class="ppt-out" id="pptOut">
+      <div class="ppt-preview" id="pptPreview"></div>
+      <div class="ppt-dl">
+        <button class="dl-btn" onclick="downloadPPT()">📥 下载 PPT (pptx)</button>
+        <button class="cp-btn" onclick="copyPPT()">📋 复制全部内容</button>
+      </div>
+    </div>
+  </div>
+  <div class="ppt-key-guide"><a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">🔑 免费获取 DeepSeek API Key → 注册即送500万tokens</a></div>
+</div>
+
+<!-- ═══ STATS + SEARCH ═══ -->
+<div style="text-align:center">
   <div class="stats">
     <div class="stat"><span class="n" id="c1">0</span><span class="l">工具</span></div>
     <div class="stat"><span class="n" id="c2">0</span><span class="l">热门</span></div>
@@ -205,13 +299,164 @@ body::before{
 
 <div class="ft">
   <div class="u" id="upd">⏳ 加载中…</div>
-  <div class="l"><a onclick="sug()">推荐收录</a> · <a onclick="window.scrollTo({top:0,behavior:'smooth'})">回到顶部</a></div>
+  <div class="l"><span onclick="toast('💫 推荐工具请留言')">推荐收录</span> · <span onclick="window.scrollTo({top:0,behavior:'smooth'})">回到顶部</span></div>
 </div>
 
 <div class="toast" id="toast"></div>
 <div class="fab" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
 
 <script>
+// ══════ PPT PROMPTS & TEMPLATES ══════
+const PPT_PROMPTS = {
+  defense: {
+    name: '毕业答辩',
+    sys: '你是一位专业的学术PPT设计师和大学导师。为毕业设计/论文答辩制作PPT内容。\n要求：\n- 每页一个核心主题，内容专业、条理清晰\n- 语言正式学术，适合答辩场景\n- 包含：背景意义、文献综述、方法、实验、结果、结论\n- 最后加致谢页\n- 输出格式：以"---"分隔每页，每页第一行是标题，后面是4-6个要点，每行一个要点\n- 每个要点控制在20字以内',
+    style: {fontName:'Microsoft Yahei',fontSize:18,color:'1e3a5f'}
+  },
+  business: {
+    name: '商业计划书',
+    sys: '你是一位风险投资分析师和商业计划书专家。为创业者制作投资人展示用的PPT。\n要求：\n- 每页直击投资人痛点，用数据说话\n- 包括：市场痛点、解决方案、商业模式、市场分析、竞争壁垒、团队、财务预测、融资需求\n- 最后加感谢页\n- 输出格式：以"---"分隔每页，每页第一行是标题，后面是4-5个要点\n- 每个要点控制在18字以内',
+    style: {fontName:'Microsoft Yahei',fontSize:18,color:'1a365d'}
+  },
+  report: {
+    name: '工作汇报',
+    sys: '你是一位资深职场汇报专家和PPT设计师。制作专业、简洁的工作汇报PPT。\n要求：\n- 每页一个核心数据/结论，先说结果再说过程\n- 包括：工作概览、关键数据、重点项目、问题与改进、下步计划\n- 最后加总结页\n- 输出格式：以"---"分隔每页，每页第一行是标题，后面是3-5个要点\n- 每个要点控制在15字以内',
+    style: {fontName:'Microsoft Yahei',fontSize:18,color:'1e293b'}
+  },
+  course: {
+    name: '教学课件',
+    sys: '你是一位资深教师和教学设计专家。制作课堂用的PPT课件。\n要求：\n- 知识结构清晰，循序渐进\n- 每页讲清楚一个知识点\n- 包含：导入、知识点讲解、案例分析、课堂练习、小结\n- 最后加思考题页\n- 输出格式：以"---"分隔每页，每页第一行是标题，后面是4-6个要点\n- 要点简洁易懂，适合课堂展示',
+    style: {fontName:'Microsoft Yahei',fontSize:18,color:'064e3b'}
+  },
+  product: {
+    name: '产品发布会',
+    sys: '你是一位顶级营销策划师和发布会文案专家。制作产品发布/推广用的PPT。\n要求：\n- 每页要有冲击力，善用对比和数字\n- 包括：用户痛点、产品亮点、竞品对比、核心数据、客户见证、购买引导\n- 最后加行动号召页\n- 输出格式：以"---"分隔每页，每页第一行是标题，后面是3-5个要点\n- 每个要点控制在12字以内，短促有力',
+    style: {fontName:'Microsoft Yahei',fontSize:18,color:'7f1d1d'}
+  }
+};
+
+const PPT_COLORS = {
+  defense: ['1e3a5f','2d6da8','b3d4f7','f0f4f8'],
+  business: ['1a365d','2c5282','e2e8f0','ffffff'],
+  report: ['1e293b','334155','cbd5e1','f8fafc'],
+  course: ['064e3b','059669','a7f3d0','ecfdf5'],
+  product: ['7f1d1d','dc2626','fecaca','fff5f5']
+};
+
+let pptData = null;
+
+function savePPTKey(){
+  const k = document.getElementById('pptKey').value.trim();
+  if(!k.startsWith('sk-')&&k.length>0){toast('Key格式不对，应以sk-开头');return}
+  if(k) localStorage.setItem('deepseek_key',k);
+  document.getElementById('pptKey').value='';
+  toast(k?'✅ Key已保存':'⚠️ Key为空');
+}
+
+async function genPPT(){
+  const topic = document.getElementById('pptTopic').value.trim();
+  if(!topic){toast('请先输入PPT主题');document.getElementById('pptTopic').focus();return}
+  const type = document.getElementById('pptType').value;
+  const slides = parseInt(document.getElementById('pptSlides').value);
+  const skip = document.getElementById('pptSkip').checked ? parseInt(document.getElementById('pptSkipNum').value)||3 : 0;
+  let key = document.getElementById('pptKey').value.trim() || localStorage.getItem('deepseek_key') || '';
+  if(!key){toast('请先设置DeepSeek API Key');document.getElementById('pptKey').focus();return}
+
+  const btn = document.getElementById('pptGo');
+  const msg = document.getElementById('pptMsg');
+  btn.classList.add('loading');btn.disabled=true;
+  msg.className='ppt-msg';msg.style.display='none';
+  document.getElementById('pptOut').classList.remove('show');
+
+  const info = PPT_PROMPTS[type];
+  const totalSlides = slides + skip;
+  const promptText = `主题："${topic}"\n类型：${info.name}\n总共${totalSlides}页PPT，前${skip}页为已有PPT请用"SKIP"标记，从第${skip+1}页开始生成${slides}页新内容。\n\n请生成${slides}页关于「${topic}」的PPT内容。`;
+
+  try{
+    const res = await fetch('https://api.deepseek.com/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({
+        model:'deepseek-chat',
+        messages:[{role:'system',content:info.sys},{role:'user',content:promptText}],
+        max_tokens:8192,temperature:0.7
+      })
+    });
+    if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error(e.error?.message||'API请求失败('+res.status+')')}
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content?.trim()||'';
+    if(!text){msg.textContent='❌ AI返回为空，请重试';msg.className='ppt-msg err';msg.style.display='block';return}
+
+    // Parse slides
+    const parts = text.split('---').filter(p=>p.trim());
+    pptData = {topic,type,totalSlides:parts.length,slides:[]};
+    for(let p of parts){
+      const lines = p.trim().split('\n').filter(l=>l.trim());
+      if(lines.length===0)continue;
+      if(lines[0].trim().toUpperCase()==='SKIP'||lines[0].includes('SKIP'))continue;
+      const title = lines[0].replace(/^#+\s*/,'').replace(/^\d+[\.\、\s]+/,'').trim();
+      const bullets = lines.slice(1).map(l=>l.replace(/^[-*•·\d+\.\s]+/,'').trim()).filter(l=>l&&l.length>2);
+      pptData.slides.push({title,bullets});
+    }
+    renderPreview();
+    msg.textContent=`✅ 生成成功！共${pptData.slides.length}页PPT`;
+    msg.className='ppt-msg ok';msg.style.display='block';
+    document.getElementById('pptOut').classList.add('show');
+  }catch(e){
+    msg.textContent='❌ '+e.message;msg.className='ppt-msg err';msg.style.display='block';
+  }finally{
+    btn.classList.remove('loading');btn.disabled=false;
+  }
+}
+
+function renderPreview(){
+  const c = document.getElementById('pptPreview');
+  c.innerHTML = pptData.slides.map((s,i)=>
+    `<div class="ppt-slide" title="${s.title}">${s.title.slice(0,8)}${s.title.length>8?'…':''}</div>`
+  ).join('');
+}
+
+function downloadPPT(){
+  if(!pptData||!pptData.slides.length){toast('请先生成PPT');return}
+  try{
+    const ppt = new PptxGenJS();
+    ppt.defineLayout({name:'WIDE',width:10,height:5.625});
+    ppt.layout='WIDE';
+    const colors = PPT_COLORS[pptData.type]||['1e293b','334155','cbd5e1','f8fafc'];
+
+    // Title slide
+    const s1 = ppt.addSlide();
+    s1.background={color:colors[0]};
+    s1.addText(pptData.topic,{x:0.5,y:1.5,w:9,h:1.2,fontSize:28,fontFace:'Microsoft Yahei',color:colors[3],bold:true,align:'center'});
+    s1.addText('AI自动生成 | 类型：'+(PPT_PROMPTS[pptData.type]?.name||'通用'),{x:0.5,y:3,w:9,h:0.5,fontSize:12,color:colors[2],align:'center'});
+
+    // Content slides
+    for(let i=0;i<pptData.slides.length;i++){
+      const s = pptData.slides[i];
+      const sl = ppt.addSlide();
+      sl.background={color:'ffffff'};
+      // Title bar
+      sl.addShape(ppt.ShapeType.rect,{x:0,y:0,w:10,h:0.8,fill:{color:colors[0]}});
+      sl.addText(s.title,{x:0.3,y:0.08,w:9.4,h:0.64,fontSize:18,fontFace:'Microsoft Yahei',color:colors[3],bold:true});
+      // Bullets
+      sl.addText(s.bullets.map(b=>'▸ '+b).join('\n'),{
+        x:0.5,y:1.1,w:9,h:4.0,fontSize:14,fontFace:'Microsoft Yahei',color:colors[1],
+        lineSpacingMultiple:1.8,valign:'top',paraSpaceAfter:6
+      });
+      // Page number
+      sl.addText((i+1)+'/'+pptData.slides.length,{x:8.5,y:5.1,w:1.2,h:0.3,fontSize:9,color:'9ca3af',align:'right'});
+    }
+    ppt.writeFile({fileName:'AI百宝箱-'+pptData.topic.slice(0,20).replace(/[\/\\?%*:|"<>]/g,'')+'.pptx'}).then(()=>toast('📥 下载成功！'));
+  }catch(e){toast('❌ 下载失败: '+e.message)}
+}
+
+function copyPPT(){
+  if(!pptData||!pptData.slides.length){toast('请先生成PPT');return}
+  const txt = pptData.slides.map((s,i)=>`--- 第${i+1}页 ---\n标题：${s.title}\n要点：\n`+s.bullets.map(b=>'  · '+b).join('\n')).join('\n\n');
+  navigator.clipboard.writeText(txt).then(()=>toast('📋 已复制全部内容')).catch(()=>toast('复制失败'));
+}
+
+// ══════ NAVIGATION ══════
 let d=null,cur='all';
 async function load(){
   const g=document.getElementById('grid');
@@ -226,6 +471,10 @@ async function load(){
     document.getElementById('c3').textContent=d.categories.length;
     document.getElementById('upd').textContent='📅 '+d.updated+' · '+t+' 个工具';
     pills();render();
+
+    // Restore saved key
+    const saved = localStorage.getItem('deepseek_key');
+    if(saved) document.getElementById('pptKey').placeholder='已保存Key ('+saved.substring(0,10)+'...)';
   }catch(e){g.innerHTML='<div class="empty" style="display:block">✦ 加载失败，刷新试试</div>'}
 }
 function pills(){
@@ -235,7 +484,6 @@ function pills(){
 }
 function setP(id){cur=id;document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active',p.dataset.p===id));f(document.getElementById('q').value)}
 function f(v){render(v)}
-function sug(){const t=document.getElementById('toast');t.textContent='💫 留言推荐好工具，收录更新';t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2000)}
 function render(v,p){
   if(p===undefined)p=cur;
   const q=(v||'').toLowerCase().trim();
@@ -247,8 +495,8 @@ function render(v,p){
     a=true;
     h+=`<div class="ch"><span class="ci">${c.icon||'#'}</span><span class="cn">${c.name}</span><span class="cb"></span></div>`+
       t.map((x,i)=>`<a class="card" style="animation-delay:${i*0.03}s" href="${x.url}" target="_blank" rel="noopener">
-        <div class="ct"><div class="ci">${x.icon||'🔧'}</div><div class="cn">${x.name}</div></div>
-        <div class="cd">${x.desc||''}</div>${x.hot?'<div class="chot">✦ 热门</div>':''}
+        <div class="ct"><div class="ci">${x.icon||'🔧'}</div><div class="cnn">${x.name}</div></div>
+        <div class="cdd">${x.desc||''}</div>${x.hot?'<div class="chott">✦ 热门</div>':''}
       </a>`).join('');
   }
   g.innerHTML=h;
@@ -256,6 +504,11 @@ function render(v,p){
   if(!a)g.innerHTML='';
 }
 window.addEventListener('scroll',()=>{document.getElementById('topBtn').style.display=window.scrollY>400?'flex':'none'});
+function toast(m){
+  const t=document.getElementById('toast');
+  t.textContent=m;t.classList.add('show');
+  clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2500);
+}
 load();
 </script>
 </body>
