@@ -1,0 +1,114 @@
+{
+  "updated": "2026-05-28",
+  "totalTools": 44,
+  "categories": [
+    {
+      "id": "ai-chat",
+      "name": "AI 对话",
+      "icon": "💬",
+      "color": "#818cf8",
+      "tools": [
+        { "name": "ChatGPT", "url": "https://chat.openai.com/", "desc": "全球最火AI对话", "icon": "🤖", "hot": true },
+        { "name": "DeepSeek", "url": "https://chat.deepseek.com/", "desc": "国产最强AI，完全免费", "icon": "🧠", "hot": true },
+        { "name": "豆包", "url": "https://www.doubao.com/", "desc": "字节跳动，多模态全能", "icon": "🫘", "hot": true },
+        { "name": "Kimi", "url": "https://kimi.moonshot.cn/", "desc": "长文本杀手，读文档神器", "icon": "🌙", "hot": true },
+        { "name": "通义千问", "url": "https://tongyi.aliyun.com/", "desc": "阿里出品，办公好帮手", "icon": "🧿" },
+        { "name": "智谱清言", "url": "https://chatglm.cn/", "desc": "清华系，国产技术顶流", "icon": "🔬" },
+        { "name": "文心一言", "url": "https://yiyan.baidu.com/", "desc": "百度AI，中文理解强", "icon": "📖" },
+        { "name": "Claude", "url": "https://claude.ai/", "desc": "Anthropic，安全可靠", "icon": "🌿" },
+        { "name": "Gemini", "url": "https://gemini.google.com/", "desc": "谷歌出品，多模态精通", "icon": "✨" },
+        { "name": "腾讯元宝", "url": "https://yuanbao.tencent.com/chat", "desc": "腾讯AI，微信生态", "icon": "💎" }
+      ]
+    },
+    {
+      "id": "ai-image",
+      "name": "AI 绘画",
+      "icon": "🎨",
+      "color": "#f472b6",
+      "tools": [
+        { "name": "Midjourney", "url": "https://www.midjourney.com/", "desc": "AI绘画天花板", "icon": "🎭", "hot": true },
+        { "name": "Stable Diffusion", "url": "https://stability.ai/", "desc": "开源最强，自由度高", "icon": "🎯" },
+        { "name": "DALL·E 3", "url": "https://openai.com/dall-e-3", "desc": "OpenAI，文字理解王者", "icon": "🎪" },
+        { "name": "即梦AI", "url": "https://jimeng.jianying.com/", "desc": "字节出品，国产首选", "icon": "🌄", "hot": true },
+        { "name": "通义万相", "url": "https://tongyi.aliyun.com/wanxiang/", "desc": "阿里AI绘图", "icon": "🖼️" },
+        { "name": "文心一格", "url": "https://yige.baidu.com/", "desc": "百度AI绘画", "icon": "🎨" }
+      ]
+    },
+    {
+      "id": "pdf",
+      "name": "PDF 工具",
+      "icon": "📄",
+      "color": "#34d399",
+      "tools": [
+        { "name": "iLovePDF", "url": "https://www.ilovepdf.com/", "desc": "全球最好用的PDF工具", "icon": "❤️", "hot": true },
+        { "name": "SmallPDF", "url": "https://smallpdf.com/cn", "desc": "瑞士品质，专业PDF", "icon": "📑", "hot": true },
+        { "name": "PDF24", "url": "https://www.pdf24.org/zh/", "desc": "完全免费，桌面端+Web", "icon": "🆓" },
+        { "name": "PDF Candy", "url": "https://pdfcandy.com/", "desc": "90+PDF工具，终身版", "icon": "🍬" },
+        { "name": "LightPDF", "url": "https://lightpdf.cn/", "desc": "国产PDF，AI加持", "icon": "⚡" }
+      ]
+    },
+    {
+      "id": "image",
+      "name": "图片工具",
+      "icon": "🖼️",
+      "color": "#fbbf24",
+      "tools": [
+        { "name": "Remove.bg", "url": "https://www.remove.bg/zh", "desc": "AI一键去背景", "icon": "✂️", "hot": true },
+        { "name": "TinyPNG", "url": "https://tinypng.com/", "desc": "智能压缩图片80%", "icon": "🗜️", "hot": true },
+        { "name": "Photopea", "url": "https://www.photopea.com/", "desc": "在线PS，替代Photoshop", "icon": "🖌️", "hot": true },
+        { "name": "佐糖", "url": "https://www.cutout.pro/", "desc": "AI图片处理全家桶", "icon": "🍬" },
+        { "name": "稿定设计", "url": "https://www.gaoding.com/", "desc": "设计模板，小白友好", "icon": "🎨" }
+      ]
+    },
+    {
+      "id": "convert",
+      "name": "格式转换",
+      "icon": "🔄",
+      "color": "#60a5fa",
+      "tools": [
+        { "name": "Convertio", "url": "https://convertio.co/zh/", "desc": "300+格式，云端转换", "icon": "🔀", "hot": true },
+        { "name": "123apps", "url": "https://123apps.com/", "desc": "50+工具，视频/音频/PDF", "icon": "🔧" },
+        { "name": "在线音频转换", "url": "https://online-audio-converter.com/", "desc": "300格式音频转换", "icon": "🎵" }
+      ]
+    },
+    {
+      "id": "dev",
+      "name": "开发工具",
+      "icon": "💻",
+      "color": "#a78bfa",
+      "tools": [
+        { "name": "JSON.cn", "url": "https://www.json.cn/", "desc": "JSON格式化/压缩/校验", "icon": "📋", "hot": true },
+        { "name": "站长工具", "url": "https://tool.chinaz.com/", "desc": "SEO/域名/IP查询神器", "icon": "🔍" },
+        { "name": "Toolnb", "url": "https://www.toolnb.com/", "desc": "100+开发者工具集合", "icon": "🧰" },
+        { "name": "百度脑图", "url": "https://naotu.baidu.com/", "desc": "免费在线思维导图", "icon": "🧠" },
+        { "name": "ProcessOn", "url": "https://www.processon.com/", "desc": "在线流程图/思维导图", "icon": "📊" }
+      ]
+    },
+    {
+      "id": "design",
+      "name": "设计资源",
+      "icon": "🎯",
+      "color": "#fb923c",
+      "tools": [
+        { "name": "Iconfont", "url": "https://www.iconfont.cn/", "desc": "3300万图标，阿里出品", "icon": "🔣", "hot": true },
+        { "name": "站酷", "url": "https://www.zcool.com.cn/", "desc": "中国最大设计社区", "icon": "🌟" },
+        { "name": "花瓣网", "url": "https://huaban.com/", "desc": "设计灵感采集", "icon": "🌸" },
+        { "name": "免费字体", "url": "https://www.100font.com/", "desc": "免费商用字体下载", "icon": "✒️" },
+        { "name": "草料二维码", "url": "https://cli.im/", "desc": "二维码生成/解码", "icon": "📱" }
+      ]
+    },
+    {
+      "id": "learn",
+      "name": "学习资源",
+      "icon": "📚",
+      "color": "#2dd4bf",
+      "tools": [
+        { "name": "菜鸟教程", "url": "https://www.runoob.com/", "desc": "编程入门首选", "icon": "🐦", "hot": true },
+        { "name": "中国大学MOOC", "url": "https://www.icourse163.org/", "desc": "国家精品在线课程", "icon": "🎓" },
+        { "name": "网易公开课", "url": "https://open.163.com/", "desc": "TED/名校公开课", "icon": "📺" },
+        { "name": "书栈网", "url": "https://www.bookstack.cn/", "desc": "程序员技术书籍", "icon": "📖" },
+        { "name": "我要自学", "url": "https://www.51zxw.net/", "desc": "技能视频教程平台", "icon": "🎬" }
+      ]
+    }
+  ]
+}
