@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI工具箱 — 精选AI工具导航</title>
+<meta name="description" content="44个精选AI工具和在线工具导航">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px;-webkit-tap-highlight-color:transparent;scroll-behavior:smooth}
+@media(max-width:400px){html{font-size:14px}}
+body{
+  background:#faf9f8;color:#1d1d1f;
+  font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display','PingFang SC','Helvetica Neue',sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+::selection{background:#0071e330;color:#1d1d1f}
+a{color:inherit;text-decoration:none}
+
+/* Header */
+.hdr{
+  background:#faf9f8;border-bottom:1px solid #e8e8ed;
+  padding:40px 20px 28px;text-align:center;
+}
+.hdr-icon{font-size:2.4rem;display:block;margin-bottom:4px}
+.hdr h1{font-size:1.5rem;font-weight:700;letter-spacing:-.02em;color:#1d1d1f}
+.hdr p{font-size:.72rem;color:#86868b;margin-top:4px;max-width:360px;margin-left:auto;margin-right:auto;line-height:1.4}
+.hdr-stats{
+  display:flex;justify-content:center;gap:24px;
+  margin:16px auto;padding:12px 0;max-width:320px;border-top:1px solid #e8e8ed;border-bottom:1px solid #e8e8ed;
+}
+.hdr-stats .s{text-align:center}
+.hdr-stats .n{font-size:1rem;font-weight:600;color:#1d1d1f;display:block}
+.hdr-stats .l{font-size:.5rem;color:#86868b;text-transform:uppercase;letter-spacing:.06em;margin-top:1px}
+
+/* Search */
+.srch{max-width:400px;margin:16px auto 0}
+.srch input{
+  width:100%;padding:10px 16px;border-radius:10px;
+  border:1px solid #d2d2d7;background:#fff;color:#1d1d1f;
+  font-size:.78rem;outline:none;transition:.2s;
+}
+.srch input:focus{border-color:#0071e3;box-shadow:0 0 0 3px #0071e315}
+.srch input::placeholder{color:#86868b}
+
+/* Pills */
+.pills-w{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,249,248,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid #e8e8ed;padding:8px 12px 10px;
+}
+.pills{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding:0 2px}
+.pills::-webkit-scrollbar{display:none}
+.pill{
+  flex:0 0 auto;padding:5px 12px;border-radius:100px;
+  font-size:.62rem;font-weight:500;cursor:pointer;user-select:none;
+  border:1px solid #d2d2d7;color:#86868b;background:#fff;white-space:nowrap;
+  transition:all .2s;
+}
+.pill:active{transform:scale(.94)}
+.pill.active{border-color:#0071e3;background:#0071e3;color:#fff;}
+.pill .c{color:#c7c7cc;font-size:.48rem;margin-left:2px}
+.pill.active .c{color:rgba(255,255,255,.6)}
+
+/* Grid */
+.grid-w{max-width:720px;margin:0 auto;padding:12px 12px 60px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:8px}
+@media(max-width:420px){.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}}
+
+.card{
+  display:flex;flex-direction:column;padding:14px 12px 12px;
+  background:#fff;border:1px solid #e8e8ed;border-radius:12px;
+  text-decoration:none;color:#1d1d1f;
+  transition:all .2s cubic-bezier(.22,1,.36,1);
+}
+.card:hover{transform:translateY(-2px);border-color:#d2d2d7;box-shadow:0 4px 12px rgba(0,0,0,.04)}
+.card:active{transform:scale(.98)}
+.cat-h{
+  display:flex;align-items:center;gap:6px;padding:6px 4px;
+  grid-column:1/-1;
+}
+.cat-h span{font-size:.7rem;font-weight:600;color:#86868b;letter-spacing:.02em}
+.cat-h .bar{flex:1;height:1px;background:#e8e8ed}
+.c-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.c-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;background:#f5f5f7;flex-shrink:0}
+.c-name{font-size:.68rem;font-weight:600;color:#1d1d1f;line-height:1.3}
+.c-desc{font-size:.55rem;color:#86868b;line-height:1.4;overflow:hidden}
+.c-hot{color:#ff453a;font-size:.45rem;font-weight:600;margin-top:3px}
+.c-arrow{display:none}
+
+/* Footer */
+.ft{padding:20px 16px 60px;text-align:center;border-top:1px solid #e8e8ed;margin:0 16px}
+.ft .u{font-size:.5rem;color:#c7c7cc;margin-bottom:4px}
+.ft .l{font-size:.5rem;color:#c7c7cc}
+.ft .l a{color:#86868b;cursor:pointer}
+.ft .l a:hover{color:#1d1d1f}
+
+/* Empty */
+.empty{text-align:center;padding:40px;color:#86868b;font-size:.72rem}
+
+/* Toast & FAB */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  padding:10px 20px;border-radius:10px;font-size:.65rem;z-index:999;
+  background:#1d1d1f;color:#f5f5f7;
+  opacity:0;pointer-events:none;transition:.3s;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.fab{
+  position:fixed;bottom:24px;right:20px;width:36px;height:36px;border-radius:50%;
+  background:#fff;border:1px solid #d2d2d7;color:#86868b;font-size:.9rem;
+  display:none;align-items:center;justify-content:center;cursor:pointer;z-index:90;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+.fab:hover{color:#1d1d1f;border-color:#86868b}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <span class="hdr-icon">🛠️</span>
+  <h1>AI工具箱</h1>
+  <p>精选44个优质工具，从AI对话到编程开发<br>一个地方找到最好的</p>
+  <div class="hdr-stats">
+    <div class="s"><span class="n" id="c1">0</span><span class="l">工具</span></div>
+    <div class="s"><span class="n" id="c2">0</span><span class="l">热门</span></div>
+    <div class="s"><span class="n" id="c3">0</span><span class="l">分类</span></div>
+  </div>
+  <div class="srch"><input id="q" placeholder="搜索工具…" oninput="doFilter(this.value)"></div>
+</div>
+
+<div class="pills-w"><div class="pills" id="pills"></div></div>
+
+<div class="grid-w"><div class="grid" id="grid"></div><div class="empty" id="empty" style="display:none">🔍 没有找到匹配的工具</div></div>
+
+<div class="ft">
+  <div class="u" id="upd">⏳ 加载中…</div>
+  <div class="l"><a onclick="sug()">推荐收录</a> · <a onclick="window.scrollTo({top:0,behavior:'smooth'})">回到顶部</a></div>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="fab" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<script>
+let d=null,cur='all';
+async function load(){
+  const g=document.getElementById('grid');
+  g.innerHTML='<div class="empty" style="display:block">⏳ 加载中…</div>';
+  try{
+    const r=await fetch('tools.json?_='+Date.now());
+    d=await r.json();
+    const t=d.categories.reduce((s,c)=>s+(c.tools?c.tools.length:0),0);
+    const h=d.categories.reduce((s,c)=>s+(c.tools?c.tools.filter(x=>x.hot).length:0),0);
+    document.getElementById('c1').textContent=t;
+    document.getElementById('c2').textContent=h;
+    document.getElementById('c3').textContent=d.categories.length;
+    document.getElementById('upd').textContent='📅 '+d.updated+' · 共收录 '+t+' 个工具';
+    pills();render();
+  }catch(e){g.innerHTML='<div class="empty" style="display:block">❌ 加载失败，请刷新</div>'}
+}
+function pills(){
+  const t=d.categories.reduce((s,c)=>s+(c.tools?c.tools.length:0),0);
+  document.getElementById('pills').innerHTML=`<div class="pill active" data-p="all" onclick="setP('all')">全部 <span class="c">${t}</span></div>`+
+    d.categories.map(c=>`<div class="pill" data-p="${c.id}" onclick="setP('${c.id}')">${c.icon||'#'} ${c.name} <span class="c">${c.tools.length}</span></div>`).join('');
+}
+function setP(id){cur=id;document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active',p.dataset.p===id));doFilter(document.getElementById('q').value)}
+function doFilter(v){render(v)}
+function sug(){const t=document.getElementById('toast');t.textContent='📩 发现好工具？留言推荐';t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2000)}
+function render(f,p){
+  if(p===undefined)p=cur;
+  const q=(f||'').toLowerCase().trim();
+  const g=document.getElementById('grid');
+  let h='',a=false;
+  for(const c of d.categories){
+    const t=(c.tools||[]).filter(x=>{if(q&&!x.name.toLowerCase().includes(q)&&!x.desc.toLowerCase().includes(q))return false;if(p!=='all'&&c.id!==p)return false;return true});
+    if(!t.length)continue;
+    a=true;
+    h+=`<div class="cat-h"><span>${c.icon||'#'} ${c.name}</span><span class="bar"></span></div>`+
+      t.map(x=>`<a class="card" href="${x.url}" target="_blank" rel="noopener">
+        <div class="c-top"><div class="c-icon">${x.icon||'🔧'}</div><div class="c-name">${x.name}</div></div>
+        <div class="c-desc">${x.desc||''}</div>${x.hot?'<div class="c-hot">★ 热门</div>':''}
+      </a>`).join('');
+  }
+  g.innerHTML=h;
+  document.getElementById('empty').style.display=a?'none':'block';
+  if(!a)g.innerHTML='';
+}
+window.addEventListener('scroll',()=>{document.getElementById('topBtn').style.display=window.scrollY>400?'flex':'none'});
+load();
+</script>
+</body>
+</html>
