@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<title>✍️ AI 文本助手 — 翻译·润色·总结·改写</title>
+<meta name="description" content="AI文本助手：智能翻译、文章润色、内容总结、风格改写。使用DeepSeek API，免费额度用完用户自带Key。">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{font-size:15px;-webkit-tap-highlight-color:transparent}
+@media(max-width:400px){html{font-size:14px}}
+body{
+  background:#080a14;color:#d1d5db;
+  font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Helvetica Neue',sans-serif;
+  min-height:100vh;
+  background-image:
+    radial-gradient(ellipse 70% 40% at 30% 15%,rgba(99,102,241,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 70% 85%,rgba(6,182,212,.04) 0%,transparent 50%);
+}
+::selection{background:#818cf855;color:#fff}
+a{color:#818cf8;text-decoration:none}
+
+/* ── HEADER ── */
+.hdr{
+  position:relative;text-align:center;padding:32px 16px 16px;overflow:hidden;
+}
+.hdr::before{
+  content:'';position:absolute;top:-80px;left:50%;transform:translateX(-50%);
+  width:400px;height:400px;
+  background:radial-gradient(circle,rgba(99,102,241,.08) 0%,transparent 60%);
+  pointer-events:none;
+}
+.h-icon{font-size:2.2rem;display:block;animation:drift 3.5s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.h-title{font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#c7d2fe,#818cf8,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.h-desc{font-size:.65rem;color:#4b5563;margin-top:4px}
+.h-back{display:inline-block;margin-top:6px;font-size:.5rem;color:#374151;padding:3px 10px;border-radius:100px;border:1px solid rgba(255,255,255,.05);cursor:pointer;transition:.2s}
+.h-back:hover{color:#6b7280;border-color:rgba(129,140,248,.15)}
+
+/* ── MODE SELECTOR ── */
+.modes{display:flex;gap:4px;padding:8px 10px;overflow-x:auto;scrollbar-width:none;max-width:500px;margin:0 auto}
+.modes::-webkit-scrollbar{display:none}
+.mode{
+  flex:0 0 auto;padding:7px 14px;border-radius:100px;
+  font-size:.62rem;font-weight:600;cursor:pointer;user-select:none;white-space:nowrap;
+  background:rgba(17,24,39,.4);border:1px solid rgba(255,255,255,.06);color:#4b5563;
+  transition:all .2s;
+}
+.mode:active{transform:scale(.94)}
+.mode.active{background:rgba(129,140,248,.12);border-color:rgba(129,140,248,.3);color:#a5b4fc}
+
+/* ── MAIN PANEL ── */
+.panel{max-width:560px;margin:6px auto;padding:0 10px}
+.panel-card{
+  background:rgba(17,24,39,.4);border:1px solid rgba(255,255,255,.06);border-radius:16px;
+  backdrop-filter:blur(12px);padding:16px;
+}
+.pc-label{font-size:.6rem;color:#4b5563;margin-bottom:6px;font-weight:500;display:flex;align-items:center;gap:4px}
+.pc-label .ex{font-size:.5rem;color:#374151;font-weight:400}
+.pc-input{
+  width:100%;min-height:120px;padding:12px;border-radius:10px;
+  background:rgba(13,17,23,.6);border:1px solid rgba(255,255,255,.06);
+  color:#d1d5db;font-size:.72rem;outline:none;resize:vertical;font-family:inherit;
+  transition:.2s;line-height:1.5;
+}
+.pc-input:focus{border-color:rgba(129,140,248,.25);box-shadow:0 0 0 3px rgba(129,140,248,.05)}
+.pc-input::placeholder{color:#374151}
+
+/* ── KEY INPUT ── */
+.key-row{display:flex;gap:6px;margin:10px 0;align-items:center}
+.key-row input{
+  flex:1;padding:8px 10px;border-radius:100px;font-size:.6rem;
+  background:rgba(13,17,23,.6);border:1px solid rgba(255,255,255,.06);color:#d1d5db;outline:none;
+  transition:.2s;
+}
+.key-row input:focus{border-color:rgba(129,140,248,.2)}
+.key-row input::placeholder{color:#374151}
+.key-btn{
+  flex:0 0 auto;padding:8px 14px;border-radius:100px;border:none;font-size:.6rem;font-weight:600;
+  cursor:pointer;transition:.2s;white-space:nowrap;
+}
+.key-btn.save{background:rgba(129,140,248,.15);color:#a5b4fc}
+.key-btn.save:hover{background:rgba(129,140,248,.25)}
+.key-btn.del{background:rgba(239,68,68,.1);color:#f87171}
+.key-btn.del:hover{background:rgba(239,68,68,.2)}
+
+/* ── GENERATE BTN ── */
+.go{width:100%;padding:12px;border-radius:12px;border:none;margin-top:8px;
+  background:linear-gradient(135deg,rgba(129,140,248,.2),rgba(129,140,248,.1));
+  border:1px solid rgba(129,140,248,.25);color:#a5b4fc;font-size:.72rem;font-weight:600;
+  cursor:pointer;transition:.25s;position:relative;overflow:hidden;
+}
+.go:active{transform:scale(.98)}
+.go:hover{background:linear-gradient(135deg,rgba(129,140,248,.3),rgba(129,140,248,.15));box-shadow:0 0 20px rgba(129,140,248,.08)}
+.go:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+.go .ld{display:none}
+.go.loading .ld{display:inline-block;animation:spin .6s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── OUTPUT ── */
+.out-wrap{margin-top:10px;display:none}
+.out-wrap.show{display:block}
+.out{
+  padding:14px;border-radius:10px;background:rgba(13,17,23,.6);min-height:80px;
+  font-size:.7rem;line-height:1.6;color:#d1d5db;white-space:pre-wrap;word-wrap:break-word;
+}
+.out-actions{display:flex;gap:6px;margin-top:6px;justify-content:flex-end}
+.out-btn{
+  padding:5px 12px;border-radius:100px;border:1px solid rgba(255,255,255,.06);font-size:.52rem;
+  background:rgba(17,24,39,.4);color:#4b5563;cursor:pointer;transition:.2s;
+}
+.out-btn:hover{color:#6b7280;border-color:rgba(129,140,248,.15)}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(20px);
+  padding:10px 20px;border-radius:12px;font-size:.6rem;z-index:999;
+  background:rgba(17,24,39,.9);border:1px solid rgba(255,255,255,.08);color:#d1d5db;
+  backdrop-filter:blur(16px);opacity:0;pointer-events:none;transition:.3s;
+  box-shadow:0 8px 32px rgba(0,0,0,.4);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── ERROR ── */
+.err{color:#f87171;font-size:.6rem;margin-top:6px;display:none}
+
+/* ── GET KEY ── */
+.key-guide{text-align:center;margin:16px 0 0}
+.key-guide a{font-size:.55rem;color:#374151}
+.key-guide a:hover{color:#6b7280}
+
+/* ── FOOTER ── */
+.ft{text-align:center;padding:24px 16px;font-size:.48rem;color:#2a3142}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <span class="h-icon">✍️</span>
+  <h1 class="h-title">AI 文本助手</h1>
+  <p class="h-desc">智能翻译 · 文章润色 · 内容总结 · 风格改写</p>
+  <a class="h-back" href="index.html">← 返回AI百宝箱</a>
+</div>
+
+<div class="modes" id="modes">
+  <div class="mode active" data-mode="translate" onclick="setMode('translate')">🌐 翻译</div>
+  <div class="mode" data-mode="polish" onclick="setMode('polish')">✨ 润色</div>
+  <div class="mode" data-mode="summarize" onclick="setMode('summarize')">📋 总结</div>
+  <div class="mode" data-mode="rewrite" onclick="setMode('rewrite')">🔄 改写</div>
+</div>
+
+<div class="panel">
+  <div class="panel-card">
+    <div class="pc-label" id="inputLabel">输入文本 <span class="ex" id="inputHint"></span></div>
+    <textarea class="pc-input" id="input" placeholder="在此输入要处理的文本…" rows="5"></textarea>
+
+    <div class="key-row">
+      <input id="keyInput" placeholder="sk-... 输入你的 DeepSeek API Key" type="password">
+      <button class="key-btn save" onclick="saveKey()">💾 保存</button>
+    </div>
+
+    <button class="go" id="goBtn" onclick="generate()"><span class="ld">⟳</span> 生成</button>
+    <div class="err" id="error"></div>
+
+    <div class="out-wrap" id="outputWrap">
+      <div class="pc-label">结果</div>
+      <div class="out" id="output"></div>
+      <div class="out-actions">
+        <button class="out-btn" onclick="copyResult()">📋 复制</button>
+        <button class="out-btn" onclick="clearOutput()">🗑️ 清空</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="key-guide" id="keyGuide">
+    <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">🔑 免费获取 DeepSeek API Key →</a>
+  </div>
+</div>
+
+<div class="ft">数据仅存本地，不会上传到任何服务器</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const MODE_PROMPTS = {
+  translate: { label: '翻译', hint: '自动识别语言，翻译为中文或英文', prompt: '你是一个专业翻译。将以下文本翻译为中文。如果原文是中文则翻译为英文。只输出翻译结果，不要额外解释。\n\n' },
+  polish: { label: '润色', hint: '优化表达，修正语病，提升可读性', prompt: '你是一个文字编辑。润色以下文本：修正语病、优化表达、提升可读性。保持原意，不要添加新内容。只输出润色后的结果。\n\n' },
+  summarize: { label: '总结', hint: '提炼核心要点，保留关键信息', prompt: '你是一个内容分析师。为以下文本写一段简明的摘要，100-150字。提炼核心要点，保留关键信息。只输出摘要。\n\n' },
+  rewrite: { label: '改写', hint: '换种方式表达同一内容', prompt: '你是一个作家。用不同的表达方式改写以下文本，保持原意但改变句式结构和用词风格。只输出改写结果。\n\n' }
+};
+
+let currentMode = 'translate';
+
+function setMode(id) {
+  currentMode = id;
+  document.querySelectorAll('.mode').forEach(m => m.classList.toggle('active', m.dataset.mode === id));
+  const info = MODE_PROMPTS[id];
+  document.getElementById('inputLabel').innerHTML = info.label + ' <span class="ex">' + info.hint + '</span>';
+  document.getElementById('input').placeholder = info.label + '：' + (id === 'translate' ? '输入要翻译的文字' : id === 'polish' ? '输入需要润色的内容' : id === 'summarize' ? '输入需要总结的文章' : '输入需要改写的文本');
+}
+
+function saveKey() {
+  const key = document.getElementById('keyInput').value.trim();
+  if (!key) { toast('请输入 API Key'); return; }
+  if (!key.startsWith('sk-')) { toast('Key 格式不对，应以 sk- 开头'); return; }
+  let keys = getStoredKeys();
+  if (!keys.includes(key)) keys.push(key);
+  localStorage.setItem('deepseek_keys', JSON.stringify(keys));
+  localStorage.setItem('deepseek_key', key);
+  document.getElementById('keyInput').value = '';
+  toast('✅ Key 已保存，共 ' + keys.length + ' 个 Key');
+}
+
+function getStoredKeys() {
+  try { return JSON.parse(localStorage.getItem('deepseek_keys') || '[]'); } catch { return []; }
+}
+
+function getActiveKey() {
+  return localStorage.getItem('deepseek_key') || '';
+}
+
+async function generate() {
+  const text = document.getElementById('input').value.trim();
+  if (!text) { toast('请先输入文本'); return; }
+
+  const key = getActiveKey();
+  if (!key) { toast('请先设置你的 DeepSeek API Key'); document.getElementById('keyInput').focus(); return; }
+
+  const btn = document.getElementById('goBtn');
+  const err = document.getElementById('error');
+  const wrap = document.getElementById('outputWrap');
+  const out = document.getElementById('output');
+
+  btn.classList.add('loading');
+  btn.disabled = true;
+  err.style.display = 'none';
+  wrap.classList.remove('show');
+  out.textContent = '';
+
+  const info = MODE_PROMPTS[currentMode];
+
+  try {
+    const res = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + key
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: info.prompt },
+          { role: 'user', content: text }
+        ],
+        max_tokens: 4096,
+        temperature: 0.7
+      })
+    });
+
+    if (!res.ok) {
+      const e = await res.json().catch(() => ({}));
+      throw new Error(e.error?.message || 'API 请求失败 (' + res.status + ')');
+    }
+
+    const data = await res.json();
+    const result = data.choices?.[0]?.message?.content?.trim() || '无返回结果';
+    out.textContent = result;
+    wrap.classList.add('show');
+  } catch (e) {
+    err.textContent = '❌ ' + e.message;
+    err.style.display = 'block';
+  } finally {
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+function copyResult() {
+  const text = document.getElementById('output').textContent;
+  if (!text) return;
+  navigator.clipboard.writeText(text).then(() => toast('📋 已复制到剪贴板')).catch(() => toast('复制失败'));
+}
+
+function clearOutput() {
+  document.getElementById('output').textContent = '';
+  document.getElementById('outputWrap').classList.remove('show');
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(() => t.classList.remove('show'), 2000);
+}
+
+// Load saved key
+const activeKey = getActiveKey();
+if (activeKey) document.getElementById('keyInput').placeholder = '已保存 Key (' + activeKey.substring(0, 10) + '...)';
+</script>
+</body>
+</html>

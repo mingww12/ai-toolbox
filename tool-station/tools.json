@@ -1,7 +1,25 @@
 {
   "updated": "2026-05-28",
-  "totalTools": 44,
+  "totalTools": 45,
   "categories": [
+    {
+      "id": "self-tools",
+      "name": "自建工具",
+      "icon": "✍️",
+      "color": "#818cf8",
+      "tools": [
+        {
+          "name": "AI 文本助手",
+          "url": "tool-ai-text.html",
+          "desc": "翻译 · 润色 · 总结 · 改写，需自备DeepSeek Key",
+          "icon": "✍️",
+          "hot": true,
+          "selfBuilt": true,
+          "verified": true,
+          "lastVerified": "2026-05-28"
+        }
+      ]
+    },
     {
       "id": "ai-chat",
       "name": "AI 对话",
