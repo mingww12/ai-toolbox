@@ -1,6 +1,6 @@
 {
-  "updated": "2026-05-28",
-  "totalTools": 45,
+  "updated": "2026-10-31",
+  "totalTools": 46,
   "categories": [
     {
       "id": "self-tools",
@@ -350,6 +350,13 @@
           "icon": "📊",
           "verified": true,
           "lastVerified": "2026-05-28"
+        },
+        {
+          "name": "agent-qa",
+          "url": "https://vostride.com",
+          "desc": "网页与移动端 AI 测试，memidex 持久记忆、经验证的自我改进、MCP 与可回看证据；模型费用另计",
+          "icon": "🧪",
+          "verified": false
         }
       ]
     },
